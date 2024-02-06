@@ -44,7 +44,7 @@ router.post("/write", async (req: Request, res: Response) => {
 router.get("/copy-file", async (req: Request, res: Response) => {
   let response: string | Error;
   const filePath = path.join(__dirname, "../test.txt");
-  fs.copyFile(filePath, path.join(__dirname, "copied_file.txt"), (err) => {
+  fs.copyFile(filePath, path.join(__dirname, "../copied_file.txt"), (err) => {
     if (err) {
       response = err;
       res.send({ message: "Error in copied file", err });
