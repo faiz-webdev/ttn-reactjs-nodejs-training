@@ -2,6 +2,7 @@
 
 # dependencies
 reactjs-training/node_modules
+node-training/node_modules
 /.pnp
 .pnp.js
 
