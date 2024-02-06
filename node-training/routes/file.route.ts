@@ -19,24 +19,32 @@ router.get("/read", async (req: Request, res: Response) => {
 });
 
 router.post("/write", async (req: Request, res: Response) => {
-  let response: string | Error;
-  const text = req.body.text;
-  const filePath = path.join(__dirname, "../test.txt");
-  fs.writeFile(filePath, text, (err) => {
-    if (err) {
-      response = err;
-      res.send({ message: "Read file", data: response });
+  try {
+    let response: string | Error;
+    const text = req.body.text;
+    const filePath = path.join(__dirname, "../new_file.txt");
+    if (!fs.existsSync(filePath)) {
+      const writeFilte = fs.writeFileSync("new_file.txt", text);
+      res.send({ message: "Content write success", success: true });
     } else {
-      res.send({ message: "Content write success" });
+      fs.appendFile(filePath, text, (err) => {
+        if (err) {
+          response = err;
+          res.send({ message: "Error in read file", data: response });
+        } else {
+          res.send({ message: "Content write success", success: true });
+        }
+      });
     }
-  });
+  } catch (error) {
+    res.send({ message: error, success: false });
+  }
 });
 
 router.get("/copy-file", async (req: Request, res: Response) => {
   let response: string | Error;
-  const text = req.body.text;
   const filePath = path.join(__dirname, "../test.txt");
-  fs.copyFile(filePath, "copied_file.txt", (err) => {
+  fs.copyFile(filePath, path.join(__dirname, "copied_file.txt"), (err) => {
     if (err) {
       response = err;
       res.send({ message: "Error in copied file", err });
@@ -44,8 +52,7 @@ router.get("/copy-file", async (req: Request, res: Response) => {
       const ress: string = fs.readFileSync("copied_file.txt", {
         encoding: "utf8",
       });
-      console.log("copied_file.txt", ress.toString());
-      res.send({ message: "Copied file", ress });
+      res.send({ message: "Copied file", data: ress.toString() });
     }
   });
 });
