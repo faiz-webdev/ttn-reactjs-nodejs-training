@@ -1,15 +1,25 @@
 import express, { Express, Request, Response } from "express";
+import http from "http";
 
 const app: Express = express();
 app.use(express.json());
 
-const port: number = 3001;
+const PORT: number = 8080;
 
-app.get("/", (req: Request, res: Response) => {
-    console.log('first')
-  res.status(200).send({ message: "Welcome" });
+app.get("/test", (req: Request, res: Response) => {
+  res.status(200).send({ message: "Hello from test" });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+app.get("/", (req: Request, res: Response) => {
+    res.status(200).send({ message: "Welcome to nodejs world" });
+  });
+
+const server = http.createServer(app);
+
+server.listen(PORT, () => {
+  console.log(`App listening at http://localhost:${PORT}`);
+});
+
+server.on("error", () => {
+  console.log("node error");
 });
