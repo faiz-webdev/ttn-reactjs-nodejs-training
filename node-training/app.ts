@@ -1,13 +1,22 @@
 import express, { Express, Request, Response } from "express";
 import http from "http";
+import dotenv from "dotenv";
+
+// Importing Routes
 import airthmeticRoute from "./routes/airthmetic.route";
 import fileRoute from "./routes/file.route";
 import excelRoute from "./routes/excel.route";
 
+// environment variable configuration
+dotenv.config();
+
+const PORT = process.env.PORT;
+
 const app: Express = express();
 app.use(express.json());
-const PORT: number = 8080;
+// const PORT: number = 8080;
 
+// Using Routes
 app.use("/airthmetic", airthmeticRoute);
 app.use("/file", fileRoute);
 app.use("/excel", excelRoute);

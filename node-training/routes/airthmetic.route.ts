@@ -1,40 +1,16 @@
 import { Request, Response, Router } from "express";
+import { add, division, multiplication, percentage, subs } from "../controller";
 
 const router: Router = Router();
 
-router.get("/operation", (req: Request, res: Response) => {
-  const val1: number = 10;
-  const val2: number = 20;
-  const result: number = val1 + val2;
-  res.send({ message: "Addition", data: result });
-});
+router.get("/add", add);
 
-router.get("/subs", (req: Request, res: Response) => {
-  const val1: number = 30;
-  const val2: number = 20;
-  const result: number = val1 - val2;
-  res.send({ message: "Substraction", data: result });
-});
+router.post("/subs", subs);
 
-router.get("/division", (req: Request, res: Response) => {
-  const val1: number = 30;
-  const val2: number = 20;
-  const result: number = val1 / val2;
-  res.send({ message: "Division", data: result });
-});
+router.post("/division", division);
 
-router.get("/multiplication", (req: Request, res: Response) => {
-  const val1: number = 30;
-  const val2: number = 20;
-  const result: number = val1 * val2;
-  res.send({ message: "Multiplication", data: result });
-});
+router.get("/multiplication", multiplication);
 
-router.get("/percentage", (req: Request, res: Response) => {
-  const val1: number = 30;
-  const percentage: number = 50;
-  const result: number = (val1 * percentage) / 100;
-  res.send({ message: "Percentage", data: result });
-});
+router.get("/percentage", percentage)
 
 export default router;
