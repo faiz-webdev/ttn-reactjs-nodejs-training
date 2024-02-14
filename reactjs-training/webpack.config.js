@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+const { SourceMapDevToolPlugin } = require("webpack");
 
 module.exports = {
   entry: "../reactjs-training/src/index.tsx",
@@ -8,6 +9,9 @@ module.exports = {
     path: path.resolve(__dirname, "../reactjs-training/build"),
   },
   plugins: [
+    new SourceMapDevToolPlugin({
+      filename: "[file].map"
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(
         __dirname,
@@ -47,6 +51,12 @@ module.exports = {
         test: /\.(jpeg|ico)$/,
         exclude: /node_modules/,
         use: ["file-loader?name=[name].[ext]"], // ?name=[name].[ext] is only necessary to preserve the original file name
+      },
+      // react router dom rule
+      {
+        test: /\.m?js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
       },
     ],
   },
